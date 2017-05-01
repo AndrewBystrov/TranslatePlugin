@@ -1,0 +1,1 @@
+Translate plugin for IntellijIdea
