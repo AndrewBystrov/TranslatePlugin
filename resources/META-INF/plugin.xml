@@ -1,0 +1,44 @@
+<idea-plugin>
+	<id>com.andrew.bystrov</id>
+	<name>TranslatePlugin</name>
+	<version>1.0</version>
+	<vendor email="andrew.bystrik@gmail.com" url="https://github.com/AndrewBystrov">My company</vendor>
+
+	<description><![CDATA[
+      Plugin for translate text. Used yandex translate api<br>
+    ]]></description>
+
+	<change-notes><![CDATA[
+
+    ]]>
+	</change-notes>
+
+	<!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+	<idea-version since-build="145.0"/>
+
+	<!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+		 on how to target different products -->
+	<!-- uncomment to enable plugin in all products
+	<depends>com.intellij.modules.lang</depends>
+	-->
+
+	<extensions defaultExtensionNs="com.intellij">
+		<!-- Add your extensions here -->
+	</extensions>
+
+	<actions>
+		<!-- Add your actions here -->
+	</actions>
+
+	<application-components>
+
+		<component>
+			<implementation-class>com.andrew.bystrov.TranslateApplicationComponent</implementation-class>
+		</component>
+	</application-components>
+
+	<extensions defaultExtensionNs="com.intellij">
+		<toolWindow id="My translate window" anchor="bottom" factoryClass="com.andrew.bystrov.MyToolWindow" icon="/resources/icons/mainIcon.png"/>
+	</extensions>
+
+</idea-plugin>
