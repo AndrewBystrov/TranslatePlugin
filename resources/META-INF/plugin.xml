@@ -6,6 +6,9 @@
 
 	<description><![CDATA[
       Plugin for translate text. Used yandex translate api<br>
+      <br>
+      Переведено сервисом «Яндекс.Переводчик»<br>
+      <a href="http://translate.yandex.ru/">http://translate.yandex.ru/</a>
     ]]></description>
 
 	<change-notes><![CDATA[

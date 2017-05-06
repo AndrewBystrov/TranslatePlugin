@@ -1,7 +1,11 @@
 package com.andrew.bystrov.translate.view;
 
 import com.andrew.bystrov.translate.Translater;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.ui.ComboBox;
+import com.intellij.ui.BrowserHyperlinkListener;
+import com.intellij.ui.HyperlinkLabel;
 import org.jdesktop.swingx.prompt.PromptSupport;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,6 +16,8 @@ import java.awt.event.KeyEvent;
 
 public class TranslatePane extends JPanel
 {
+	private static final int MAX_TOP_WIDTH = 30;
+
 	private JTextArea taText;
 	private JTextArea taResult;
 
@@ -45,7 +51,38 @@ public class TranslatePane extends JPanel
 
 		this.setLayout(new GridLayout(1, 2, 8, 0));
 
-		//region Left panel
+		this.add(createLeftPanel());
+		this.add(createRightPanel());
+	}
+
+	private JPanel createRightPanel()
+	{
+		JPanel panel = new JPanel();
+
+		//region license panel
+		JPanel licensePanel = new JPanel();
+		licensePanel.setLayout(new BoxLayout(licensePanel, BoxLayout.PAGE_AXIS));
+		licensePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, MAX_TOP_WIDTH));
+
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		Label lbl = new Label("Переведено сервисом «Яндекс.Переводчик»");
+		lbl.setAlignment(Label.RIGHT);
+		licensePanel.add(lbl);
+		HyperlinkLabel hyperLink = new HyperlinkLabel.Croppable();
+		hyperLink.setAlignmentX(-1.0f);
+		licensePanel.add(hyperLink);
+		hyperLink.setHtmlText("<a href=\"http://translate.yandex.ru/\">http://translate.yandex.ru/</a>");
+		hyperLink.setHyperlinkTarget("http://translate.yandex.ru");
+		//endregion
+
+		panel.add(licensePanel);
+		panel.add(this.taResult);
+		return panel;
+	}
+
+	@NotNull
+	private JPanel createLeftPanel()
+	{
 		JPanel userEditorPanel = new JPanel();
 		userEditorPanel.setLayout(new BoxLayout(userEditorPanel, BoxLayout.PAGE_AXIS));
 
@@ -54,10 +91,7 @@ public class TranslatePane extends JPanel
 		userEditorPanel.add(comboBoxesPanel);
 		userEditorPanel.add(Box.createRigidArea(new Dimension(0, 8)));
 		userEditorPanel.add(this.taText);
-		//endregion
-
-		this.add(userEditorPanel);
-		this.add(this.taResult);
+		return userEditorPanel;
 	}
 
 	private void translateText()
@@ -66,13 +100,6 @@ public class TranslatePane extends JPanel
 		this.taResult.setText(result);
 	}
 
-	public static void addItemsToComboBox(ComboBox<String> comboBox)
-	{
-		comboBox.addItem("English");
-		comboBox.addItem("Russian");
-	}
-
-	@NotNull
 	private JPanel createComboBoxesPanel()
 	{
 		JPanel comboBoxesPanel = new JPanel();
@@ -105,5 +132,11 @@ public class TranslatePane extends JPanel
 		comboBoxesPanel.add(translate, c3);
 		comboBoxesPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
 		return comboBoxesPanel;
+	}
+
+	public static void addItemsToComboBox(ComboBox<String> comboBox)
+	{
+		comboBox.addItem("English");
+		comboBox.addItem("Russian");
 	}
 }
