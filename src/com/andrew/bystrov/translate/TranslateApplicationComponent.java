@@ -1,9 +1,7 @@
-package com.andrew.bystrov;
+package com.andrew.bystrov.translate;
 
 import com.intellij.openapi.components.ApplicationComponent;
-import com.intellij.openapi.components.PersistentStateComponent;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class TranslateApplicationComponent implements ApplicationComponent
 {
@@ -23,7 +21,6 @@ public class TranslateApplicationComponent implements ApplicationComponent
 	@Override
 	public void initComponent()
 	{
-
 		// TODO: insert component initialization logic here
 	}
 
