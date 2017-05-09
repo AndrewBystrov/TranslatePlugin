@@ -12,6 +12,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class Sender
 
 			List<NameValuePair> list = new ArrayList<>();
 			list.add(new BasicNameValuePair(API_KEY, API_KEY_VALUE));
-			list.add(new BasicNameValuePair("text", originText));
+			list.add(new BasicNameValuePair("text", new String(originText.getBytes(), Charset.forName("UTF-8"))));
 			list.add(new BasicNameValuePair("lang", lang));
 			list.add(new BasicNameValuePair("format", "plain"));
 			list.add(new BasicNameValuePair("options", "1"));

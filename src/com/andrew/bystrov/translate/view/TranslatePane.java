@@ -1,23 +1,17 @@
 package com.andrew.bystrov.translate.view;
 
-import com.andrew.bystrov.translate.Langs;
+import com.andrew.bystrov.translate.Lang;
+import com.andrew.bystrov.translate.LangsCommon;
 import com.andrew.bystrov.translate.Translater;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.ui.ComboBox;
-import com.intellij.ui.BrowserHyperlinkListener;
 import com.intellij.ui.HyperlinkLabel;
 import com.intellij.util.ui.AbstractTableCellEditor;
 import org.jdesktop.swingx.prompt.PromptSupport;
-import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import javax.swing.event.CellEditorListener;
-import javax.swing.table.TableCellEditor;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.EventObject;
 
 public class TranslatePane extends JPanel
 {
@@ -26,8 +20,8 @@ public class TranslatePane extends JPanel
 	private JTextArea taText;
 	private JTextArea taResult;
 
-	private ComboBox<String> cbTranslateFrom;
-	private ComboBox<String> cbTranslateTo;
+	private ComboBox<Lang> cbTranslateFrom;
+	private ComboBox<Lang> cbTranslateTo;
 
 	public TranslatePane()
 	{
@@ -53,8 +47,8 @@ public class TranslatePane extends JPanel
 		this.cbTranslateFrom = new ComboBox<>();
 		this.cbTranslateTo = new ComboBox<>();
 
-		Langs.addAllLangs(this.cbTranslateFrom);
-		Langs.addAllLangs(this.cbTranslateTo);
+		LangsCommon.addAllLangs(this.cbTranslateFrom);
+		LangsCommon.addAllLangs(this.cbTranslateTo);
 
 		this.setLayout(new GridLayout(1, 2, 8, 0));
 
@@ -103,8 +97,8 @@ public class TranslatePane extends JPanel
 	private void translateText()
 	{
 		String result = Translater.translate(this.taText.getText()
-				, ((String) this.cbTranslateFrom.getSelectedItem()).substring(0, 2).toLowerCase()
-				, ((String) this.cbTranslateTo.getSelectedItem()).substring(0, 2).toLowerCase()
+				, ((Lang) this.cbTranslateFrom.getSelectedItem()).getDirection()
+				, ((Lang) this.cbTranslateTo.getSelectedItem()).getDirection()
 		);
 		System.out.println("result :" + result);
 		this.taResult.setText(result);
@@ -133,21 +127,6 @@ public class TranslatePane extends JPanel
 		c3.fill = GridBagConstraints.HORIZONTAL;
 		c3.anchor = GridBagConstraints.LINE_END;
 		c3.weightx = 0.1;
-
-		this.cbTranslateFrom.registerTableCellEditor(this.cbTranslateFrom, new AbstractTableCellEditor()
-		{
-			@Override
-			public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column)
-			{
-				return new Label("ZZZZZ");
-			}
-
-			@Override
-			public Object getCellEditorValue()
-			{
-				return "zxc";
-			}
-		});
 
 		comboBoxesPanel.add(this.cbTranslateFrom, c0);
 		comboBoxesPanel.add(new Label("=>"), c1);
