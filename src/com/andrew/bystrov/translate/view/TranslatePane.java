@@ -96,7 +96,11 @@ public class TranslatePane extends JPanel
 
 	private void translateText()
 	{
-		String result = Translater.translate(this.taText.getText(), (String) this.cbTranslateFrom.getSelectedItem(), (String) this.cbTranslateTo.getSelectedItem());
+		String result = Translater.translate(this.taText.getText()
+				, ((String) this.cbTranslateFrom.getSelectedItem()).substring(0, 2).toLowerCase()
+				, ((String) this.cbTranslateTo.getSelectedItem()).substring(0, 2).toLowerCase()
+		);
+		System.out.println("result :" + result);
 		this.taResult.setText(result);
 	}
 
