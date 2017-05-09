@@ -1,4 +1,4 @@
-package com.andrew.bystrov.translate;
+package com.andrew.bystrov.translate.idea;
 
 import com.andrew.bystrov.translate.view.TranslatePane;
 import com.intellij.openapi.project.Project;

@@ -1,4 +1,4 @@
-package com.andrew.bystrov.translate;
+package com.andrew.bystrov.translate.idea;
 
 import com.intellij.openapi.components.ApplicationComponent;
 import org.jetbrains.annotations.NotNull;

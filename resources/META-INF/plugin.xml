@@ -36,14 +36,14 @@
 	<application-components>
 
 		<component>
-			<implementation-class>com.andrew.bystrov.translate.TranslateApplicationComponent</implementation-class>
+			<implementation-class>com.andrew.bystrov.translate.idea.TranslateApplicationComponent</implementation-class>
 		</component>
 	</application-components>
 
 	<extensions defaultExtensionNs="com.intellij">
 		<toolWindow id="Translate"
 					anchor="bottom"
-					factoryClass="com.andrew.bystrov.translate.MyToolWindow"
+					factoryClass="com.andrew.bystrov.translate.idea.MyToolWindow"
 					icon="/com/andrew/bystrov/translate/icons/mainIcon13x13.png"/>
 	</extensions>
 

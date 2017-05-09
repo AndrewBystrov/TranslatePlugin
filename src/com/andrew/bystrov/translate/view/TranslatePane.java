@@ -1,18 +1,23 @@
 package com.andrew.bystrov.translate.view;
 
+import com.andrew.bystrov.translate.Langs;
 import com.andrew.bystrov.translate.Translater;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.ui.BrowserHyperlinkListener;
 import com.intellij.ui.HyperlinkLabel;
+import com.intellij.util.ui.AbstractTableCellEditor;
 import org.jdesktop.swingx.prompt.PromptSupport;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.table.TableCellEditor;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.EventObject;
 
 public class TranslatePane extends JPanel
 {
@@ -27,6 +32,7 @@ public class TranslatePane extends JPanel
 	public TranslatePane()
 	{
 		this.taText = new JTextArea();
+		this.taText.setLineWrap(true);
 		PromptSupport.setPrompt("Use ctrl+enter to translate text", this.taText);
 		this.taText.addKeyListener(new KeyAdapter()
 		{
@@ -41,13 +47,14 @@ public class TranslatePane extends JPanel
 		});
 
 		this.taResult = new JTextArea();
+		this.taResult.setLineWrap(true);
 		this.taResult.setEditable(false);
 
 		this.cbTranslateFrom = new ComboBox<>();
 		this.cbTranslateTo = new ComboBox<>();
 
-		addItemsToComboBox(this.cbTranslateFrom);
-		addItemsToComboBox(this.cbTranslateTo);
+		Langs.addAllLangs(this.cbTranslateFrom);
+		Langs.addAllLangs(this.cbTranslateTo);
 
 		this.setLayout(new GridLayout(1, 2, 8, 0));
 
@@ -80,7 +87,6 @@ public class TranslatePane extends JPanel
 		return panel;
 	}
 
-	@NotNull
 	private JPanel createLeftPanel()
 	{
 		JPanel userEditorPanel = new JPanel();
@@ -128,6 +134,21 @@ public class TranslatePane extends JPanel
 		c3.anchor = GridBagConstraints.LINE_END;
 		c3.weightx = 0.1;
 
+		this.cbTranslateFrom.registerTableCellEditor(this.cbTranslateFrom, new AbstractTableCellEditor()
+		{
+			@Override
+			public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column)
+			{
+				return new Label("ZZZZZ");
+			}
+
+			@Override
+			public Object getCellEditorValue()
+			{
+				return "zxc";
+			}
+		});
+
 		comboBoxesPanel.add(this.cbTranslateFrom, c0);
 		comboBoxesPanel.add(new Label("=>"), c1);
 		comboBoxesPanel.add(this.cbTranslateTo, c2);
@@ -136,11 +157,5 @@ public class TranslatePane extends JPanel
 		comboBoxesPanel.add(translate, c3);
 		comboBoxesPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
 		return comboBoxesPanel;
-	}
-
-	public static void addItemsToComboBox(ComboBox<String> comboBox)
-	{
-		comboBox.addItem("English");
-		comboBox.addItem("Russian");
 	}
 }
