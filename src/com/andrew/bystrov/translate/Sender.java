@@ -23,7 +23,7 @@ public class Sender
 	public static final String LANGS = "getLangs";
 	public static final String API_KEY = "key";
 
-	public static final String API_KEY_VALUE = "";
+	public static final String API_KEY_VALUE = "trnsl.1.1.20170506T182642Z.13bb19f22d8d5bf7.b86c0056b6fd616b64e0b57dc9dd2efd91bcf315";
 
 	public Sender()
 	{

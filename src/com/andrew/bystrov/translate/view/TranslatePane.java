@@ -47,13 +47,24 @@ public class TranslatePane extends JPanel
 		this.cbTranslateFrom = new ComboBox<>();
 		this.cbTranslateTo = new ComboBox<>();
 
-		LangsCommon.addAllLangs(this.cbTranslateFrom);
-		LangsCommon.addAllLangs(this.cbTranslateTo);
+		LangsCommon.getInstance().addAllLangs(this.cbTranslateFrom);
+		LangsCommon.getInstance().addAllLangs(this.cbTranslateTo);
 
-		this.setLayout(new GridLayout(1, 2, 8, 0));
+		this.setLayout(new BorderLayout());
 
-		this.add(createLeftPanel());
-		this.add(createRightPanel());
+		Dimension minimumSize = new Dimension(100, 50);
+
+
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+		splitPane.setDividerLocation(0.5);
+		JPanel leftPanel = createLeftPanel();
+		leftPanel.setMinimumSize(minimumSize);
+		splitPane.setLeftComponent(leftPanel);
+		JPanel rightPanel = createRightPanel();
+		rightPanel.setMinimumSize(minimumSize);
+		splitPane.setRightComponent(rightPanel);
+
+		this.add(splitPane, BorderLayout.CENTER);
 	}
 
 	private JPanel createRightPanel()

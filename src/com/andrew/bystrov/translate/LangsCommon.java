@@ -10,19 +10,32 @@ import java.util.stream.Collectors;
 
 public class LangsCommon
 {
-	public static void addAllLangs(ComboBox<Lang> comboBox)
+	private List<Lang> langs;
+
+	private static LangsCommon ourInstance = new LangsCommon();
+
+	public static LangsCommon getInstance()
+	{
+		return ourInstance;
+	}
+
+	public void addAllLangs(ComboBox<Lang> comboBox)
 	{
 		getLangs().forEach(comboBox::addItem);
 	}
 
-	public static List<Lang> getLangs()
+	public List<Lang> getLangs()
 	{
-		Sender sender = new Sender();
-		String response = sender.getLangs();
-		return parseResponse(response);
+		if (this.langs == null)
+		{
+			Sender sender = new Sender();
+			String response = sender.getLangs();
+			this.langs = parseResponse(response);
+		}
+		return this.langs;
 	}
 
-	private static List<Lang> parseResponse(String response)
+	private List<Lang> parseResponse(String response)
 	{
 		System.out.println("Get langs response : " + response);
 		LangsJson langsJson = new Gson().fromJson(response, LangsJson.class);
