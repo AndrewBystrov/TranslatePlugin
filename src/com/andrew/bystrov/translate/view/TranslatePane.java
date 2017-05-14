@@ -3,6 +3,7 @@ package com.andrew.bystrov.translate.view;
 import com.andrew.bystrov.translate.Lang;
 import com.andrew.bystrov.translate.LangsCommon;
 import com.andrew.bystrov.translate.Translater;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.ui.HyperlinkLabel;
 import com.intellij.util.ui.AbstractTableCellEditor;
@@ -12,9 +13,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.concurrent.*;
 
 public class TranslatePane extends JPanel
 {
+	private ExecutorService service = Executors.newSingleThreadExecutor();
+
 	private static final int MAX_TOP_WIDTH = 30;
 
 	private JTextArea taText;
@@ -109,12 +113,23 @@ public class TranslatePane extends JPanel
 
 	private void translateText()
 	{
-		String result = Translater.translate(this.taText.getText()
-				, ((Lang) this.cbTranslateFrom.getSelectedItem()).getDirection()
-				, ((Lang) this.cbTranslateTo.getSelectedItem()).getDirection()
-		);
-		System.out.println("result :" + result);
-		this.taResult.setText(result);
+
+		Future<String> submit = service.submit(() ->
+				Translater.translate(this.taText.getText()
+					, ((Lang) this.cbTranslateFrom.getSelectedItem()).getDirection()
+					, ((Lang) this.cbTranslateTo.getSelectedItem()).getDirection()
+				)
+			);
+		try
+		{
+			this.taResult.setText(submit.get());
+		}
+		catch (Exception e)
+		{
+			Logger.getInstance(this.getClass()).error(e.getMessage(), e);
+			this.taResult.setText("Something wrong. See log for details");
+		}
+
 	}
 
 	private JPanel createComboBoxesPanel()
