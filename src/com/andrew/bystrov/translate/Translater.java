@@ -1,5 +1,9 @@
 package com.andrew.bystrov.translate;
 
+import com.andrew.bystrov.translate.jsons.JsonUtils;
+import com.andrew.bystrov.translate.jsons.TranslateJson;
+import com.google.gson.Gson;
+
 public class Translater
 {
 	private String originText;
@@ -20,7 +24,12 @@ public class Translater
 
 	private String parseResponse(String response)
 	{
-
-		return response;
+		Gson gson = new Gson();
+		TranslateJson json = gson.fromJson(response, TranslateJson.class);
+		if (json.getCode() != 200)
+		{
+			return JsonUtils.createException(json.getCode(), json.getMessage()).getMessage();
+		}
+		return json.getText();
 	}
 }

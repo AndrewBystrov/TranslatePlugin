@@ -6,6 +6,12 @@ import java.util.Map;
 
 public class LangsJson
 {
+	@SerializedName("code")
+	private int code;
+
+	@SerializedName("message")
+	private String message;
+
 	@SerializedName("langs")
 	private Map<String, String> langs;
 
@@ -20,5 +26,15 @@ public class LangsJson
 	public String[] getDirs()
 	{
 		return dirs;
+	}
+
+	public int getCode()
+	{
+		return code;
+	}
+
+	public String getMessage()
+	{
+		return message;
 	}
 }

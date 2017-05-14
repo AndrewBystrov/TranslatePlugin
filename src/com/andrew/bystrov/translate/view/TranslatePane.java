@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.*;
 import java.util.concurrent.*;
 
 public class TranslatePane extends JPanel
@@ -51,23 +52,37 @@ public class TranslatePane extends JPanel
 		this.cbTranslateFrom = new ComboBox<>();
 		this.cbTranslateTo = new ComboBox<>();
 
-		LangsCommon.getInstance().addAllLangs(this.cbTranslateFrom);
-		LangsCommon.getInstance().addAllLangs(this.cbTranslateTo);
+		java.util.List<Lang> langs;
+		try
+		{
+			langs = LangsCommon.getInstance().getLangs();
+			langs.forEach(lang -> {
+				this.cbTranslateFrom.addItem(lang);
+				this.cbTranslateTo.addItem(lang);
+				this.cbTranslateFrom.setSelectedItem(new Lang("English", "en-en"));
+			});
+		}
+		catch (Exception e)
+		{
+			this.taText.setText(e.getMessage());
+			this.taResult.setEditable(false);
+		}
 
-		this.cbTranslateFrom.setSelectedItem(new Lang("English", "en-en"));
 
 		this.setLayout(new BorderLayout());
 
 		Dimension minimumSize = new Dimension(100, 50);
-
+		Dimension prefferedSize = new Dimension(300, 50);
 
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		splitPane.setDividerLocation(0.5);
 		JPanel leftPanel = createLeftPanel();
 		leftPanel.setMinimumSize(minimumSize);
+		leftPanel.setPreferredSize(prefferedSize);
 		splitPane.setLeftComponent(leftPanel);
 		JPanel rightPanel = createRightPanel();
 		rightPanel.setMinimumSize(minimumSize);
+		rightPanel.setPreferredSize(prefferedSize);
 		splitPane.setRightComponent(rightPanel);
 
 		this.add(splitPane, BorderLayout.CENTER);
