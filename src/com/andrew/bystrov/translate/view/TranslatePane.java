@@ -50,6 +50,8 @@ public class TranslatePane extends JPanel
 		LangsCommon.getInstance().addAllLangs(this.cbTranslateFrom);
 		LangsCommon.getInstance().addAllLangs(this.cbTranslateTo);
 
+		this.cbTranslateFrom.setSelectedItem(new Lang("English", "en-en"));
+
 		this.setLayout(new BorderLayout());
 
 		Dimension minimumSize = new Dimension(100, 50);

@@ -40,11 +40,11 @@ public class Sender
 
 			List<NameValuePair> list = new ArrayList<>();
 			list.add(new BasicNameValuePair(API_KEY, API_KEY_VALUE));
-			list.add(new BasicNameValuePair("text", new String(originText.getBytes(), Charset.forName("UTF-8"))));
+			list.add(new BasicNameValuePair("text", new String(originText.getBytes("UTF-8"), "UTF-8")));
 			list.add(new BasicNameValuePair("lang", lang));
 			list.add(new BasicNameValuePair("format", "plain"));
 			list.add(new BasicNameValuePair("options", "1"));
-			post.setEntity(new UrlEncodedFormEntity(list));
+			post.setEntity(new UrlEncodedFormEntity(list, "UTF-8"));
 			HttpResponse response = client.execute(post);
 
 			return parseResponse(response);
